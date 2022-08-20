@@ -1,0 +1,350 @@
+from marshmallow import Schema, fields
+from api.schema.object import ObjectSchema
+
+
+class TaskSchema(ObjectSchema):
+    title = fields.String(required=True)
+    '''
+    Название задачи.
+    '''
+
+
+    description = fields.String()
+    '''
+    Описание задачи.
+    '''
+
+
+    deadline = fields.DateTime()
+    '''
+    Крайний срок.
+    '''
+
+
+    START_DATE_PLAN = fields.DateTime()
+    '''
+    Плановая дата начала.
+    '''
+
+
+    END_DATE_PLAN = fields.DateTime()
+    '''
+    Плановая дата завершения.
+    '''
+
+
+    PRIORITY = fields.Integer()
+    '''
+    Приоритет
+    '''
+
+
+    ACCOMPLICES = fields.List(fields.Integer())
+    '''
+    Соисполнители (идентификаторы пользователей).
+    '''
+
+
+    ACCOMPLICE = fields.Integer()
+    '''
+    Соисполнители (поле используется для фильтрации).    
+    '''
+    
+
+    AUDITORS = fields.List(fields.Integer())
+    '''
+    Наблюдатели (идентификаторы пользователей).
+    '''
+
+
+    AUDITOR = fields.Integer()
+    '''
+    Наблюдатели (поле используется для фильтрации).
+    '''
+
+
+    TAGS = fields.List(fields.String())
+    '''
+    Теги (при добавлении - просто массив тегов в виде текста). \n
+    CTasks::GetList() не возвращает поля тегов. \n
+    CTaskItem::getInstance()->getTags() возвращает массив имен тегов.
+    '''
+
+
+    TAG = fields.String()
+    '''
+    Теги (поле используется для фильтрации).
+    '''
+
+
+    ALLOW_CHANGE_DEADLINE = fields.String()
+    '''
+    Флаг "Разрешить ответственному менять крайний срок".
+    '''
+
+
+    TASK_CONTROL = fields.String()
+    '''
+    Флаг "Принять работу после завершения задачи".
+    '''
+
+
+    PARENT_ID = fields.Integer()
+    '''
+    Идентификатор родительской задачи.
+    '''
+
+
+    DEPENDS_ON = fields.Integer()
+    '''
+    Идентификатор предыдущей задачи.
+    '''
+
+
+    GROUP_ID = fields.Integer()
+    '''
+    Идентификатор рабочей группы.
+    '''
+
+
+    RESPONSIBLE_ID = fields.Integer()
+    '''
+    Идентификатор ответственного.
+    '''
+
+
+    TIME_ESTIMATE = fields.Number()
+    '''
+    Плановые трудозатраты.
+    '''
+
+
+    ID = fields.Integer()
+    '''
+    Идентификатор задачи. Уникален в рамках базы данных.
+    '''
+
+
+    CREATED_BY = fields.Integer()
+    '''
+    Идентификатор постановщика.
+    '''
+
+
+    DESCRIPTION_IN_BBCODE = fields.String()
+    '''
+    Флаг указывающий, что описание задачи хранится в BB-кодах.
+    '''
+
+
+    DECLINE_REASON = fields.String()
+    '''
+    Причина отклонения задачи.
+    '''
+
+
+    REAL_STATUS = fields.String()
+    '''
+    Истинный статус задачи,
+    который записывается через STATUS (см. константы CTasks::STATE_xxx).\n
+    Только для чтения.
+    '''
+
+
+    STATUS = fields.Integer()
+    '''
+    Мета-статус задачи.
+    При записи можно использовать константы CTasks::STATE_xxx, однако,
+    при чтении, помимо CTasks::STATE_xxx, в результатах можно увидеть CTasks::METASTATE_xxx.
+    То есть на самом деле статус задачи может быть CTasks::STATE_NEW,
+    а при чтении вернется нам CTasks::METASTATE_EXPIRED (для просроченной задачи).
+    В случае если мы хотим узнать истинный статус задачи, следует читать поле REAL_STATUS.
+
+    Task statuses: 
+    1 - New,
+    2 - Pending (Accepted),
+    3 - In Progress,
+    4 - Supposedly completed,
+    5 - Completed,
+    6 - Deferred,
+    7 - Declined
+    '''
+
+
+    RESPONSIBLE_NAME = fields.String()
+    '''
+    Имя ответственного.
+    '''
+    
+
+    RESPONSIBLE_LAST_NAME = fields.String()
+    '''
+    Фамилия ответственного.
+    '''
+
+
+    RESPONSIBLE_SECOND_NAME = fields.String()
+    '''
+    Отчество ответственного.
+    '''
+
+
+    DATE_START = fields.DateTime()
+    '''
+    Дата начала выполнения задачи.
+    '''
+
+
+    DURATION_FACT = fields.Integer()
+    '''
+    Затраченное время на задачу (в минутах).
+    '''
+
+
+    DURATION_PLAN = fields.Integer()
+    '''
+    Планируемая длительность в часах или днях.
+    '''
+
+
+    DURATION_TYPE = fields.String()
+    '''
+    Тип единицы измерения в планируемой длительности: days, hours или minutes.
+    '''
+
+
+    CREATED_BY_NAME = fields.String()
+    '''
+    Имя постановщика.
+    '''
+
+
+    CREATED_BY_LAST_NAME = fields.String()
+    '''
+    Фамилия постановщика.
+    '''
+
+
+    CREATED_BY_SECOND_NAME = fields.String()
+    '''
+    Отчество постановщика.
+    '''
+
+
+    CHANGED_BY = fields.Integer()
+    '''
+    Пользователь, изменивший задачу в последний раз (идентификатор пользователя).
+    '''
+
+
+    CHANGED_DATE = fields.DateTime()
+    '''
+    Дата последнего изменения задачи.
+    '''
+
+
+    STATUS_CHANGED_BY = fields.Integer()
+    '''
+    Пользователь, изменивший статус задачи (идентификатор пользователя).
+    '''
+
+
+    STATUS_CHANGED_DATE = fields.DateTime()
+    '''
+    Дата смены статуса.
+    '''
+
+
+    CLOSED_BY = fields.Integer()
+    '''
+    Кем была завершена задача.
+    '''
+
+
+    CLOSED_DATE = fields.DateTime()
+    '''
+    Дата завершения задачи.
+    '''
+
+
+    GUID = fields.UUID()
+    '''
+    Глобально-уникальный идентификатор. \n
+    С приемлемым уровнем уверенности, данный идентификатор непреднамеренно никогда
+    не будет использован для чего-то ещё даже в других базах данных.
+    '''
+
+
+    MARK = fields.String()
+    '''
+    Оценка по задаче (возможные значения P (положительная) и N (отрицательная)).
+    '''
+
+
+    VIEWED_DATE = fields.DateTime()
+    '''
+    Дата последнего просмотра задачи в публичном интерфейсе текущим пользователем \n
+    (от имени которого делается запрос на получение данных задачи).
+    '''
+
+
+    TIME_SPENT_IN_LOGS = fields.Integer()
+    '''
+    Затраченное время на задачу (в секундах).
+    '''
+
+
+    FAVORITE = fields.Boolean()
+    '''
+    Присутствие и избранном для текущего пользователя.
+    '''
+
+
+    ALLOW_TIME_TRACKING = fields.String()
+    '''
+    Флаг включения учета затраченного времени по задаче.
+    '''
+
+
+    ADD_IN_REPORT = fields.String()
+    '''
+    Флаг включения задачи в отчет по эффективности.
+    '''
+
+
+    FORUM_ID = fields.String()
+    '''Идентификатор форума , в котором хранятся комментарии к задаче.'''
+
+
+    FORUM_TOPIC_ID = fields.String()
+    '''Идентификатор темы форума , в котором хранятся комментарии к задаче.'''
+
+
+    COMMENTS_COUNT = fields.Integer()
+    '''Число комментариев к задаче.'''
+
+
+    SITE_ID = fields.Integer()
+    '''Идентификатор сайта. По умолчанию в это поле записывается идентификатор сайта, на котором создается задача.'''
+
+
+    SUBORDINATE = fields.String()
+    '''Флаг, который показывает, является ли кто-то из участников задачи подчиненным текущего пользователя.'''
+
+
+    FORKED_BY_TEMPLATE_ID = fields.Integer()
+    '''Идентификатор шаблона, на основе которого была автоматически создана задача. Для некоторых старых задач может быть не установлен.'''
+
+
+    MULTITASK = fields.String()
+    '''Флаг, означающий, что задача была создана для нескольких ответственных.'''
+
+
+    ONLY_ROOT_TASKS = fields.String()
+    '''Поле, позволяющее выбирать только те задачи, у которых либо нет родительской задачи, либо есть, но к этой родительской задаче мы не имеем доступа.'''
+
+
+    MATCH_WORK_TIME = fields.String()
+    '''Флаг, который показывает, что даты исполнения и крайний срок должны всегда устанавливаться в рабочее время.'''
+    # TODO:д описать поля схемы из документации битрикса, переделать их в camelCase,
+    # потому что оно возвращает в camelCase, а не так, как в документации
