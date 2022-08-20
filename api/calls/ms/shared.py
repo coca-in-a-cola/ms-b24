@@ -2,16 +2,16 @@ import requests
 import urllib.parse
 from flask import current_app
 from api.schema.ms.meta import MetaDataSchema
+from bunch import Bunch, bunchify
 
-
-def get_by_meta(meta: MetaDataSchema):
+def get_by_meta(meta : Bunch):
     r = current_app.ms_session.get(meta.href)
-    return r.json() if r.ok else None
+    return bunchify(r.json()) if r.ok else None
     
 
 def get_by_uuid(target, uuid):
     r = current_app.ms_session.get(f"{current_app.config['MS_OUTGOING_URI']}/{target}/{uuid}")
-    return r.json() if r.ok else None
+    return bunchify(r.json()) if r.ok else None
 
 
 def get(target, filter = None, window_size = 100, offset = 0):
@@ -29,7 +29,7 @@ def get(target, filter = None, window_size = 100, offset = 0):
         if (not "rows" in json or len(json['rows']) == 0):
             return None
 
-        return json['rows']
+        return bunchify(json['rows'])
 
 
 def get_all(target, filter = None, window_size = 100):

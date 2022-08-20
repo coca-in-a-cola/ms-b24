@@ -1,6 +1,6 @@
 import functools
 from flask import current_app, request, jsonify
-
+from bunch import bunchify
 '''
     Обрабатывает JSON-запрос, извлекая из него объект
 '''
@@ -20,5 +20,5 @@ def fetch_json(f):
                     'error' : 'Данные неверно закодированы в json'
             }), 400            
 
-        return f(*args, data=data, **kwargs)
+        return f(*args, data=bunchify(data), **kwargs)
     return decorated
