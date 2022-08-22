@@ -20,13 +20,13 @@ def dispatch_events(f):
         except:
             return jsonify({
                     'error' : 'Ожидается событые (должен содержать поле events)'
-            }), 400
+            }), 401
         
         for event in events:
             if not event.action in event_dispatchers:
                 return jsonify({
                         'error' : f'Событие {event.action} не найдено'
-                }), 400
+                }), 402
 
             result = result.append(event_dispatchers[event.action](event.meta))
 
