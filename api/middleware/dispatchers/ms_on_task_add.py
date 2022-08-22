@@ -11,7 +11,7 @@ def on_task_add(meta, **kwargs):
     B24Tasks().add(id=task.id, data=dict(
         UF_MS_HREF = meta.href,
         # Будем считать, что заголовок - это первое предложение задачи
-        TITLE = re.split(', |_|-|!', task.description)[0],
+        TITLE = re.split(r', |_|-|! |\. ', task.description)[0],
         DESCRIPTION = task.description,
         CREATED_DATE = task.created,
         CHANGED_DATE = task.updated,
