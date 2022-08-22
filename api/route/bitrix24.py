@@ -9,4 +9,4 @@ bitrix24_api = Blueprint('bitrix24', __name__)
 @fetch_b24_format
 @dispatch_event
 def endpoint(*args, **kwargs):
-    return jsonify("OK", 200)
+    return jsonify("OK"), 200

@@ -48,7 +48,7 @@ if __name__ == '__main__':
     if (args.production):
         serve(app, host=host, port=port)
     else:
-        """
+        
         @app.before_request
         def log_request():
             print("-----")
@@ -59,5 +59,5 @@ if __name__ == '__main__':
                 print(request.json)
             except:
                 pass
-        """
+
         app.run(host=host, port=port)

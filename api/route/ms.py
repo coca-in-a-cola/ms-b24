@@ -9,5 +9,5 @@ ms_api = Blueprint('ms', __name__)
 @fetch_json
 @dispatch_events
 def endpoint(*args, **kwargs):
-    return jsonify("OK", 200)
+    return jsonify("OK"), 200
 
