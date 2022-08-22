@@ -9,7 +9,7 @@ waitress = "==2.1.2"
 six = "==1.16.0"
 requests = "*"
 marshmallow = "*"
-bunch = "==1.0.1"
+munch = "*"
 
 [dev-packages]
 

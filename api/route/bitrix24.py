@@ -8,5 +8,5 @@ bitrix24_api = Blueprint('bitrix24', __name__)
 @bitrix24_api.route('/bitrix24', methods=['POST'])
 @fetch_b24_format
 @dispatch_event
-def lol(*args, **kwargs):
-    return "lol", 404
+def endpoint(*args, **kwargs):
+    return jsonify("OK", 200)

@@ -2,11 +2,11 @@ import functools
 from flask import current_app, request, jsonify
 from api.middleware.dispatchers.ms_on_task_add import on_task_add
 from api.schema.ms.meta import MetaDataSchema
-from bunch import Bunch, bunchify
+from munch import Munch
 
-event_dispatchers = {
-    'CREATE': on_task_add
-}
+event_dispatchers = Munch (
+    CREATE = on_task_add
+)
 
 '''
     Обрабатывает событыя в параметре "data"

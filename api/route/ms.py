@@ -8,5 +8,6 @@ ms_api = Blueprint('ms', __name__)
 @ms_api.route('/ms', methods=['POST'])
 @fetch_json
 @dispatch_events
-def lol(*args, **kwargs):
-    return "lol", 404
+def endpoint(*args, **kwargs):
+    return jsonify("OK", 200)
+

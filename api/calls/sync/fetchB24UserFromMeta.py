@@ -2,9 +2,10 @@ from api.calls.ms.shared import get_by_meta
 from types import SimpleNamespace
 import requests
 from flask import current_app
+from munch import *
 
 def fetchB24UserFromMeta(meta):
-    ms_user = SimpleNamespace(**get_by_meta(meta))
+    ms_user = get_by_meta(meta)
     r = requests.post(
             f"{current_app.config['BITRIX24_INCOMING_WEBHOOK']}user.search",
             json={
@@ -12,13 +13,17 @@ def fetchB24UserFromMeta(meta):
                 "FILTER": {
                     "NAME": ms_user.firstName,
                     "LAST_NAME": ms_user.lastName,
-                    "SECOND_NAME": ms_user.middleName
+                    "SECOND_NAME": ms_user.middleName if hasattr(ms_user, 'middleName') else ""
                 }
             })
 
-    data = r.json()
+    if not r.ok:
+        return None
 
-    if (r.ok and len(data['result'] > 0)):
-        # Берём только первого
-        b24_user = SimpleNamespace(**data['result'][0])
-        return b24_user
+    data = munchify(r.json())
+
+    if len(data['result']) < 0:
+        return None
+        
+    b24_user = data.result[0]
+    return b24_user

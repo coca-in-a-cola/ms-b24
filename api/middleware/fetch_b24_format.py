@@ -1,7 +1,7 @@
 import functools
 from flask import current_app, request, jsonify
 from helpers.parser import parse
-from bunch import bunchify
+from munch import munchify
 
 '''
     Обрабатывает запрос из Битрикс24, извлекая из него объект
@@ -28,5 +28,5 @@ def fetch_b24_format(f):
                     'error' : 'Данные неверно закодированы'
             }), 400
 
-        return f(*args, data=bunchify(parsed), **kwargs)
+        return f(*args, data=munchify(parsed), **kwargs)
     return decorated
