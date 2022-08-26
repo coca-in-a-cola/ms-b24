@@ -3,6 +3,8 @@ from flask import current_app
 from api.calls.ms.tasks import Tasks as MSTasks
 from api.calls.ms.shared import get_by_meta, get_by_uuid
 from api.calls.sync.fetchB24UserFromMeta import fetchB24UserFromMeta
+from api.calls.sync.fetchCRMEntityFromMeta import fetchCRMEntityIDFromMeta
+
 from munch import Munch, munchify
 import re
 
@@ -18,8 +20,7 @@ def on_task_add(meta, **kwargs):
         STATUS =  5 if task.done else 1,
         DEADLINE = task.dueToDate if hasattr(task, 'dueToDate') else None,
         CREATED_BY = fetchB24UserFromMeta(task.author.meta).ID,
-        RESPONSIBLE_ID = fetchB24UserFromMeta(task.assignee.meta).ID
+        RESPONSIBLE_ID = fetchB24UserFromMeta(task.assignee.meta).ID,
+        UF_CRM_TASK = fetchCRMEntityIDFromMeta(meta)
         #TODO: дописать ещё поля
     ))
-    
-    print(task)
