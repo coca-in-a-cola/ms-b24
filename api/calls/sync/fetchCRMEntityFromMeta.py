@@ -9,10 +9,12 @@ def fetchCRMEntityIDFromMeta(meta):
     
     filter = Munch()
 
-    if hasattr(entity, phone):
+    if hasattr(entity, 'phone'):
         filter.PHONE = entity.phone
-    if hasattr(entity, email):
+    if hasattr(entity, 'email'):
         filter.EMAIL = entity.email
+    if not hasattr(entity, 'phone') and not hasattr(entity, 'email'):
+        return None
 
     b24_CRM_entities = {
         "company": "CO",
@@ -26,7 +28,6 @@ def fetchCRMEntityIDFromMeta(meta):
                 json={
                     "FILTER": filter,
                     "SELECT": [
-                        'ID'
                     ]
                 })
 

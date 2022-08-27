@@ -4,6 +4,7 @@ from api.calls.ms.tasks import Tasks as MSTasks
 from api.calls.ms.shared import get_by_meta, get_by_uuid
 from api.calls.sync.fetchB24UserFromMeta import fetchB24UserFromMeta
 from api.calls.sync.fetchCRMEntityFromMeta import fetchCRMEntityIDFromMeta
+from api.calls.sync.findOrCreateFileFromMeta import findOrCreateFileFromMeta
 
 from munch import Munch, munchify
 import re
@@ -21,6 +22,8 @@ def on_task_add(meta, **kwargs):
         DEADLINE = task.dueToDate if hasattr(task, 'dueToDate') else None,
         CREATED_BY = fetchB24UserFromMeta(task.author.meta).ID,
         RESPONSIBLE_ID = fetchB24UserFromMeta(task.assignee.meta).ID,
-        UF_CRM_TASK = fetchCRMEntityIDFromMeta(meta)
-        #TODO: дописать ещё поля
+        UF_CRM_TASK = [fetchCRMEntityIDFromMeta(task.agent.meta) if hasattr(task, 'agent') else None],
+        UF_WEBDAV_FILES = list(findOrCreateFileFromMeta(task.files.meta)) if hasattr(task, 'files') else None,
+        # TODO: привязывать документы к сделкам
     ))
+    pass

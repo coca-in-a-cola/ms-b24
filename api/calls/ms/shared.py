@@ -4,6 +4,11 @@ from flask import current_app
 from api.schema.ms.meta import MetaDataSchema
 from munch import Munch, munchify
 
+
+def download_by_meta(meta : Munch):
+    r = current_app.ms_session.get(meta.downloadHref)
+    return r.content
+
 def get_by_meta(meta : Munch):
     r = current_app.ms_session.get(meta.href)
     return munchify(r.json()) if r.ok else None
