@@ -21,11 +21,27 @@ class Tasks:
             json={'taskId':id, 'select': self.fields})
         data = r.json()
         return data['result']['task']
-    
+
 
     def add(self, id = None, data = {}):
         r = requests.post(
             f"{current_app.config['BITRIX24_INCOMING_WEBHOOK']}tasks.task.add",
             json={'taskId':id, 'fields': data} if id else {'fields': data})
+        data = r.json()
+        return data
+
+
+    def update(self, id = None, data = {}):
+        r = requests.post(
+            f"{current_app.config['BITRIX24_INCOMING_WEBHOOK']}tasks.task.update",
+            json={'taskId':id, 'fields': data} if id else {'fields': data})
+        data = r.json()
+        return data
+
+
+    def delete(self, id):
+        r = requests.post(
+            f"{current_app.config['BITRIX24_INCOMING_WEBHOOK']}tasks.task.delete",
+            json={'taskId':id})
         data = r.json()
         return data

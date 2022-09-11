@@ -1,11 +1,16 @@
 import functools
 from flask import current_app, request, jsonify
 from api.middleware.dispatchers.ms_on_task_add import on_task_add
+from api.middleware.dispatchers.ms_on_task_delete import on_task_delete
+from api.middleware.dispatchers.ms_on_task_update import on_task_update
+
 from api.schema.ms.meta import MetaDataSchema
 from munch import Munch
 
 event_dispatchers = Munch (
-    CREATE = on_task_add
+    CREATE = on_task_add,
+    UPDATE = on_task_update,
+    DELETE = on_task_delete
 )
 
 '''
