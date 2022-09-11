@@ -8,10 +8,10 @@ def fetchB24TaskFromMeta(meta):
     r = requests.post(
             f"{current_app.config['BITRIX24_INCOMING_WEBHOOK']}tasks.task.list",
             json={
-                # Пытаемся соспставить по ФИО:
-                "FILTER": {
+                "filter": {
                     "UF_MS_HREF": meta.href,
-                }
+                },
+                "select": ["ID"]
             })
 
     if not r.ok:
