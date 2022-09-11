@@ -1,4 +1,4 @@
-from api.calls.bitrix24.tasks import Tasks as B24Tasks
+from api.calls.bitrix24.tasks import B24Tasks
 from flask import current_app
 from api.calls.ms.tasks import Tasks as MSTasks
 from api.calls.ms.shared import get_by_meta, get_by_uuid
@@ -15,7 +15,7 @@ def on_task_update(meta, **kwargs):
     b24_task = fetchB24TaskFromMeta(meta)
     # загружаем файлы в хранилище
     
-    B24Tasks().update(id=b24_task.id, data=Munch(
+    B24Tasks.update(id=b24_task.id, data=Munch(
         UF_MS_HREF = meta.href,
         # Будем считать, что заголовок - это первое предложение задачи
         TITLE = re.split(r', |_|-|! |\. ', task.description)[0],

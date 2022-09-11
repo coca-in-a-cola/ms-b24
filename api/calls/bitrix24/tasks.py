@@ -45,3 +45,5 @@ class Tasks:
             json={'taskId':id})
         data = r.json()
         return data
+
+B24Tasks = Tasks()
