@@ -1,4 +1,3 @@
-from api.calls.bitrix24.tasks import B24Tasks
 from flask import current_app
 from api.calls.ms.tasks import Tasks as MSTasks
 from api.calls.ms.shared import get_by_meta, get_by_uuid
@@ -13,7 +12,7 @@ def on_task_add(meta, **kwargs):
     task = get_by_meta(meta)
     # загружаем файлы в хранилище
     
-    B24Tasks.add(id=task.id, data=dict(
+    current_app.B24Tasks.add(id=task.id, data=dict(
         UF_MS_HREF = meta.href,
         # Будем считать, что заголовок - это первое предложение задачи
         TITLE = re.split(r', |_|-|! |\. ', task.description)[0],

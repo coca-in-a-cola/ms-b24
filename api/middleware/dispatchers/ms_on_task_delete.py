@@ -1,4 +1,3 @@
-from api.calls.bitrix24.tasks import B24Tasks
 from flask import current_app
 from api.calls.ms.tasks import Tasks as MSTasks
 from api.calls.ms.shared import get_by_meta, get_by_uuid
@@ -14,5 +13,5 @@ def on_task_delete(meta, **kwargs):
     b24_task = fetchB24TaskFromMeta(meta)
     # загружаем файлы в хранилище
     
-    B24Tasks.delete(id=b24_task.id)
+    current_app.B24Tasks.delete(id=b24_task.id)
      

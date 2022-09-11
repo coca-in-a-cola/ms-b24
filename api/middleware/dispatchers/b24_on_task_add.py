@@ -1,10 +1,9 @@
-from api.calls.bitrix24.tasks import B24Tasks
 from flask import current_app
 from api.calls.ms.tasks import Tasks as MSTasks
 
 def on_task_add(data, **kwargs):
     task_id = data['FIELDS_AFTER']['ID']
-    task = B24Tasks.get(task_id)
+    task = current_app.B24Tasks.get(task_id)
     if not current_app.config['PRODUCTION']:
         print('Got task by id:\n', task)
     

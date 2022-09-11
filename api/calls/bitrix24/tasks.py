@@ -46,4 +46,3 @@ class Tasks:
         data = r.json()
         return data
 
-B24Tasks = Tasks()

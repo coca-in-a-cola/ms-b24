@@ -1,4 +1,6 @@
+
 from flask import Flask, jsonify, request
+from api.calls.bitrix24.tasks import Tasks
 from waitress import serve
 from argparse import ArgumentParser
 from itertools import chain
@@ -41,6 +43,9 @@ if __name__ == '__main__':
     ms_session = requests.Session()
     ms_session.auth = (app.config['MS_LOGIN'], app.config['MS_PASSWORD'])
     app.ms_session = ms_session
+
+    with app.app_context():
+        app.B24Tasks = Tasks()
 
     port = args.port
     host = args.host
